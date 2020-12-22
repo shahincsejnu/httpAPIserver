@@ -43,8 +43,8 @@ to quickly create a Cobra application.`,
 func init() {
 	rootCmd.AddCommand(apiStartCmd)
 
-	apiStartCmd.Flags().StringVarP(&Port, "port", "p", "8080", "This flag is used to set the port, default 8080")
-
+	apiStartCmd.Flags().StringVarP(&Port, "port", "p", ":8080", "This flag is used to set the port, default 8080")
+	fmt.Println("int port : ", Port)
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
