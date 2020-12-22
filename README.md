@@ -10,6 +10,9 @@ This is a basic RESTful API server, build with Golang. In this API server I have
 
 `go install github.com/shahincsejnu/httpAPIserver`
 
+### Basic Authentication
+
+- give username : `admin` and password : `admin` for each query to the api endpoint otherwise access will be denied
 
 ### Run by CLI Commands
 
