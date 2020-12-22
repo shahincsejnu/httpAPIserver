@@ -17,9 +17,12 @@ package cmd
 
 import (
 	"fmt"
+	"httpAPIserver/api"
 
 	"github.com/spf13/cobra"
 )
+
+var Port string
 
 // apiStartCmd represents the apiStart command
 var apiStartCmd = &cobra.Command{
@@ -33,11 +36,14 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("apiStart called")
+		api.StartAPI(Port)
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(apiStartCmd)
+
+	apiStartCmd.Flags().StringVarP(&Port, "port", "p", "8080", "This flag is used to set the port, default 8080")
 
 	// Here you will define your flags and configuration settings.
 
