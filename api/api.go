@@ -115,7 +115,7 @@ func addNewArticle(w http.ResponseWriter, req *http.Request) {
 
 func getAllArticles(w http.ResponseWriter, req *http.Request) {
 	head := req.Header.Get("Authorization")
-
+	fmt.Println(head)
 	if basicAuth(head) == false {
 		w.WriteHeader(http.StatusUnauthorized)
 		w.Write([]byte("Access Denied"))
@@ -214,7 +214,6 @@ func deleteArticle(w http.ResponseWriter, req *http.Request) {
 
 	w.WriteHeader(http.StatusNoContent)
 }
-
 
 
 func basicAuth(req string) bool {
