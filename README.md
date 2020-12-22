@@ -16,3 +16,9 @@ This is a basic RESTful API server, build with Golang. In this API server I have
 - start the API in default port : 8080 by `httpAPIserver apiStart`
 - start the API in your given port by `httpAPIserver apiStart -p=8088`, give your port number in the place of 8088
 
+
+### API Endpoints Testing
+
+- Primarily tested the API endpoints by [Postman](https://github.com/postmanlabs)
+
+

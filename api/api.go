@@ -1,12 +1,14 @@
 package  api
 
 import (
+	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"github.com/gorilla/mux"
+	"strings"
 )
 
 type Article struct {
@@ -23,8 +25,12 @@ type Author struct {
 }
 
 var Articles []Article
+var User map[string]string
 
 func CreateInitialDB() {
+	User = make(map[string]string)
+	User["admin"] = "admin"
+
 	Articles = []Article {
 		{
 			ID : "1",
@@ -80,43 +86,86 @@ func CreateInitialDB() {
 }
 
 
-func homePage(w http.ResponseWriter, req *http.Request) {
-	fmt.Fprintf(w, "Welcome to the Homepage!")
-}
-
-func apiHomePage(w http.ResponseWriter, req *http.Request) {
-	fmt.Fprintf(w, "Welcome to my REST API")
-}
-
 func addNewArticle(w http.ResponseWriter, req *http.Request) {
+	head := req.Header.Get("Authorization")
+
+	if basicAuth(head) == false {
+		w.WriteHeader(http.StatusUnauthorized)
+		w.Write([]byte("Access Denied"))
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
 	reqBody, _ := ioutil.ReadAll(req.Body)
 
 	var article Article
 
-	json.Unmarshal(reqBody, &article)
+	if err := json.Unmarshal(reqBody, &article); err != nil {
+		log.Println(err)
+		return
+	}
 
 	Articles = append(Articles, article)
+	w.WriteHeader(http.StatusCreated)
 
-	json.NewEncoder(w).Encode(article)
+	if err := json.NewEncoder(w).Encode(article); err != nil {
+		log.Println(err)
+	}
 }
 
 func getAllArticles(w http.ResponseWriter, req *http.Request) {
-	json.NewEncoder(w).Encode(Articles)
+	head := req.Header.Get("Authorization")
+
+	if basicAuth(head) == false {
+		w.WriteHeader(http.StatusUnauthorized)
+		w.Write([]byte("Access Denied"))
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+
+	w.WriteHeader(http.StatusOK)
+	if err := json.NewEncoder(w).Encode(Articles); err != nil {
+		log.Println(err)
+	}
 }
 
 func getSingleArticle(w http.ResponseWriter, req *http.Request) {
+	head := req.Header.Get("Authorization")
+
+	if basicAuth(head) == false {
+		w.WriteHeader(http.StatusUnauthorized)
+		w.Write([]byte("Access Denied"))
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
 	vars := mux.Vars(req)
 	key := vars["id"]
 
 	for _, article := range Articles {
 		if article.ID == key {
-			json.NewEncoder(w).Encode(article)
-			break
+			w.WriteHeader(http.StatusOK)
+			if err := json.NewEncoder(w).Encode(article); err != nil {
+				log.Println(err)
+			}
+			return
 		}
 	}
+
+	w.WriteHeader(http.StatusNoContent)
 }
 
 func updateArticle(w http.ResponseWriter, req *http.Request) {
+	head := req.Header.Get("Authorization")
+
+	if basicAuth(head) == false {
+		w.WriteHeader(http.StatusUnauthorized)
+		w.Write([]byte("Access Denied"))
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
 	vars := mux.Vars(req)
 	key := vars["id"]
 
@@ -124,28 +173,64 @@ func updateArticle(w http.ResponseWriter, req *http.Request) {
 
 	var newArticle Article
 
-	json.Unmarshal(reqBody, &newArticle)
+	if err := json.Unmarshal(reqBody, &newArticle); err != nil {
+		log.Println(err)
+		return
+	}
 
 	for index, article := range Articles {
 		if article.ID == key {
+			w.WriteHeader(http.StatusCreated)
 			Articles[index] = newArticle
-			break
+			if err := json.NewEncoder(w).Encode(newArticle); err != nil {
+				log.Println(err)
+			}
+			return
 		}
 	}
 
-	json.NewEncoder(w).Encode(newArticle)
+	w.WriteHeader(http.StatusNoContent)
 }
 
 func deleteArticle(w http.ResponseWriter, req *http.Request) {
+	head := req.Header.Get("Authorization")
+
+	if basicAuth(head) == false {
+		w.WriteHeader(http.StatusUnauthorized)
+		w.Write([]byte("Access Denied"))
+		return
+	}
+
 	vars := mux.Vars(req)
 	key := vars["id"]
 
 	for index, article := range Articles {
 		if article.ID == key {
+			w.WriteHeader(http.StatusOK)
 			Articles = append(Articles[:index], Articles[index+1:]...)
-			break
+			return
 		}
 	}
+
+	w.WriteHeader(http.StatusNoContent)
+}
+
+
+
+func basicAuth(req string) bool {
+	st := strings.Split(req, " ")
+
+	value, _ := base64.StdEncoding.DecodeString(st[1])
+
+	st2 := string(value)
+
+	st3 := strings.Split(st2, ":")
+
+	if User[st3[0]] == st3[1] {
+		return true
+	}
+
+	return false
 }
 
 
@@ -155,8 +240,6 @@ func StartAPI(Port string) {
 
 	router := mux.NewRouter().StrictSlash(true)
 
-	router.HandleFunc("/", homePage).Methods("GET")
-	router.HandleFunc("/api", apiHomePage).Methods("GET")
 	router.HandleFunc("/api/articles", getAllArticles).Methods("GET")
 	router.HandleFunc("/api/article", addNewArticle).Methods("POST")
 	router.HandleFunc("/api/article/{id}", deleteArticle).Methods("DELETE")
