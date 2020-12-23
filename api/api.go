@@ -96,7 +96,12 @@ func addNewArticle(w http.ResponseWriter, req *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	reqBody, _ := ioutil.ReadAll(req.Body)
+	reqBody, err := ioutil.ReadAll(req.Body)
+
+	if err != nil {
+		log.Println(err)
+		return
+	}
 
 	var article Article
 
@@ -175,7 +180,12 @@ func updateArticle(w http.ResponseWriter, req *http.Request) {
 
 	//fmt.Println(key)
 
-	reqBody, _ := ioutil.ReadAll(req.Body)
+	reqBody, err := ioutil.ReadAll(req.Body)
+
+	if err != nil {
+		log.Println(err)
+		return
+	}
 
 	var newArticle Article
 
@@ -225,7 +235,12 @@ func deleteArticle(w http.ResponseWriter, req *http.Request) {
 func basicAuth(req string) bool {
 	st := strings.Split(req, " ")
 
-	value, _ := base64.StdEncoding.DecodeString(st[1])
+	value, err := base64.StdEncoding.DecodeString(st[1])
+
+	if err != nil {
+		log.Println(err)
+		return false
+	}
 
 	st2 := string(value)
 
