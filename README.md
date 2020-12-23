@@ -23,5 +23,8 @@ This is a basic RESTful API server, build with Golang. In this API server I have
 ### API Endpoints Testing
 
 - Primarily tested the API endpoints by [Postman](https://github.com/postmanlabs)
+- E2E Testing.
+    - added unit testing for this API
+    - Checked response status code with our expected status code
 
 
