@@ -1,7 +1,6 @@
 package api
 
 import (
-	"encoding/base64"
 	"fmt"
 	"github.com/gorilla/mux"
 	"io"
@@ -21,21 +20,27 @@ func Test_addNewArticle(t *testing.T) {
 		Method string
 		URL string
 		Body io.Reader
-		Auth string
+		Username string
+		Password string
+		//Auth string
 		ExpectedStatusCode int
 	}{
 		{
 			Method: "POST",
 			URL : "http://localhost:8080/api/article",
 			Body : strings.NewReader(`{"ID" : "6", "Title" : "oka", "Body" : "hello", "Author" : {"ID" : "20", "Name" : "keu na", "Rating" : 20}}`),
-			Auth : "admin:admin",
+			//Auth : "admin:admin",
+			Username: "admin",
+			Password: "admin",
 			ExpectedStatusCode: http.StatusCreated,
 		},
 		{
 			Method : "POST",
 			URL : "http://localhost:8080/api/article",
 			Body : strings.NewReader(`{"ID" : "8", "Title" : "oka", "Body" : "hello", "Author" : {"ID" : "20", "Name" : "keu na", "Rating" : 20}}`),
-			Auth : "admin:noadmin",
+			//Auth : "admin:noadmin",
+			Username: "admin",
+			Password: "noadmin",
 			ExpectedStatusCode: http.StatusUnauthorized,
 		},
 	}
@@ -49,7 +54,8 @@ func Test_addNewArticle(t *testing.T) {
 
 	for index, testCase := range testCases {
 		request, err := http.NewRequest(testCase.Method, testCase.URL, testCase.Body)
-		request.Header.Add("Authorization", "Basic " + base64.StdEncoding.EncodeToString([]byte(testCase.Auth)))
+		//request.Header.Add("Authorization", "Basic " + base64.StdEncoding.EncodeToString([]byte(testCase.Auth)))
+		request.SetBasicAuth(testCase.Username, testCase.Password)
 
 		if err != nil {
 			t.Fatal(err)
@@ -75,19 +81,25 @@ func Test_getAllArticles(t *testing.T) {
 	testCases := []struct{
 		Method string
 		URL string
-		Auth string
+		//Auth string
+		Username string
+		Password string
 		ExpectedStatusCode int
 	}{
 		{
 			Method: "GET",
 			URL : "http://localhost:8080/api/articles",
-			Auth : "admin:admin",
+			//Auth : "admin:admin",
+			Username: "admin",
+			Password: "admin",
 			ExpectedStatusCode: http.StatusOK,
 		},
 		{
 			Method: "GET",
 			URL : "http://localhost:8080/api/articles",
-			Auth: "admin:1234",
+			//Auth: "admin:1234",
+			Username: "admin",
+			Password: "1234",
 			ExpectedStatusCode: http.StatusUnauthorized,
 		},
 	}
@@ -101,7 +113,9 @@ func Test_getAllArticles(t *testing.T) {
 
 	for index, testCase := range testCases {
 		request, err := http.NewRequest(testCase.Method, testCase.URL, nil)
-		request.Header.Add("Authorization", "Basic " + base64.StdEncoding.EncodeToString([]byte(testCase.Auth)))
+		//request.Header.Add("Authorization", "Basic " + base64.StdEncoding.EncodeToString([]byte(testCase.Auth)))
+
+		request.SetBasicAuth(testCase.Username, testCase.Password)
 
 		if err != nil {
 			t.Fatal(err)
@@ -127,14 +141,18 @@ func Test_getSingleArticle(t *testing.T) {
 	testCases := []struct{
 		Method string
 		URL string
-		Auth string
+		//Auth string
+		Username string
+		Password string
 		vars map[string]string
 		ExpectedStatusCode int
 	}{
 		{
 			Method: "GET",
 			URL : "http://localhost:8080/api/article",
-			Auth : "admin:admin",
+			//Auth : "admin:admin",
+			Username: "admin",
+			Password: "admin",
 			vars : map[string]string{
 				"id" : "2",
 			},
@@ -143,7 +161,9 @@ func Test_getSingleArticle(t *testing.T) {
 		{
 			Method: "GET",
 			URL : "http://localhost:8080/api/article",
-			Auth : "admin:noadmin",
+			//Auth : "admin:noadmin",
+			Username: "admin",
+			Password: "noadmin",
 			vars : map[string]string{
 				"id" : "2",
 			},
@@ -152,7 +172,9 @@ func Test_getSingleArticle(t *testing.T) {
 		{
 			Method: "GET",
 			URL : "http://localhost:8080/api/article",
-			Auth : "admin:admin",
+			//Auth : "admin:admin",
+			Username: "admin",
+			Password: "admin",
 			vars : map[string]string{
 				"id" : "200",
 			},
@@ -169,7 +191,8 @@ func Test_getSingleArticle(t *testing.T) {
 
 	for index, testCase := range testCases {
 		request, err := http.NewRequest(testCase.Method, testCase.URL, nil)
-		request.Header.Add("Authorization", "Basic " + base64.StdEncoding.EncodeToString([]byte(testCase.Auth)))
+		//request.Header.Add("Authorization", "Basic " + base64.StdEncoding.EncodeToString([]byte(testCase.Auth)))
+		request.SetBasicAuth(testCase.Username, testCase.Password)
 
 		if err != nil {
 			t.Fatal(err)
@@ -203,7 +226,9 @@ func Test_updateArticle(t *testing.T) {
 		URL string
 		Body io.Reader
 		vars map[string]string
-		Auth string
+		//Auth string
+		Username string
+		Password string
 		ExpectedStatusCode int
 	}{
 		{
@@ -213,7 +238,9 @@ func Test_updateArticle(t *testing.T) {
 			vars : map[string]string {
 				"id" : "1",
 			},
-			Auth : "admin:admin",
+			//Auth : "admin:admin",
+			Username: "admin",
+			Password: "admin",
 			ExpectedStatusCode: http.StatusCreated,
 		},
 		{
@@ -223,7 +250,9 @@ func Test_updateArticle(t *testing.T) {
 			vars : map[string]string {
 				"id" : "202",
 			},
-			Auth : "admin:admin",
+			//Auth : "admin:admin",
+			Username: "admin",
+			Password: "admin",
 			ExpectedStatusCode: http.StatusNoContent,
 		},
 		{
@@ -233,7 +262,9 @@ func Test_updateArticle(t *testing.T) {
 			vars : map[string]string {
 				"id" : "1",
 			},
-			Auth : "admin:noadmin",
+			//Auth : "admin:noadmin",
+			Username: "admin",
+			Password: "noadmin",
 			ExpectedStatusCode: http.StatusUnauthorized,
 		},
 	}
@@ -247,7 +278,8 @@ func Test_updateArticle(t *testing.T) {
 
 	for index, testCase := range testCases {
 		request, err := http.NewRequest(testCase.Method, testCase.URL, testCase.Body)
-		request.Header.Add("Authorization", "Basic " + base64.StdEncoding.EncodeToString([]byte(testCase.Auth)))
+		//request.Header.Add("Authorization", "Basic " + base64.StdEncoding.EncodeToString([]byte(testCase.Auth)))
+		request.SetBasicAuth(testCase.Username, testCase.Password)
 
 		if err != nil {
 			t.Fatal(err)
@@ -276,7 +308,9 @@ func Test_deleteArticle(t *testing.T) {
 		Method string
 		URL string
 		vars map[string]string
-		Auth string
+		//Auth string
+		Username string
+		Password string
 		ExpectedStatusCode int
 	}{
 		{
@@ -285,7 +319,9 @@ func Test_deleteArticle(t *testing.T) {
 			vars : map[string]string{
 				"id" : "1",
 			},
-			Auth : "admin:admin",
+			//Auth : "admin:admin",
+			Username: "admin",
+			Password: "admin",
 			ExpectedStatusCode: http.StatusOK,
 		},
 		{
@@ -294,7 +330,9 @@ func Test_deleteArticle(t *testing.T) {
 			vars : map[string]string{
 				"id" : "101",
 			},
-			Auth : "admin:admin",
+			//Auth : "admin:admin",
+			Username: "admin",
+			Password: "admin",
 			ExpectedStatusCode: http.StatusNoContent,
 		},
 		{
@@ -303,7 +341,9 @@ func Test_deleteArticle(t *testing.T) {
 			vars : map[string]string{
 				"id" : "1",
 			},
-			Auth : "admin:noadmin",
+			//Auth : "admin:noadmin",
+			Username: "admin",
+			Password: "noadmin",
 			ExpectedStatusCode: http.StatusUnauthorized,
 		},
 	}
@@ -317,7 +357,8 @@ func Test_deleteArticle(t *testing.T) {
 
 	for index, testCase := range testCases {
 		request, err := http.NewRequest(testCase.Method, testCase.URL, nil)
-		request.Header.Add("Authorization", "Basic " + base64.StdEncoding.EncodeToString([]byte(testCase.Auth)))
+		//request.Header.Add("Authorization", "Basic " + base64.StdEncoding.EncodeToString([]byte(testCase.Auth)))
+		request.SetBasicAuth(testCase.Username, testCase.Password)
 
 		if err != nil {
 			t.Fatal(err)

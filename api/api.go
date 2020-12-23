@@ -1,14 +1,12 @@
 package  api
 
 import (
-	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"github.com/gorilla/mux"
 	"io/ioutil"
 	"log"
 	"net/http"
-	"strings"
 )
 
 type Article struct {
@@ -87,13 +85,26 @@ func CreateInitialDB() {
 
 
 func addNewArticle(w http.ResponseWriter, req *http.Request) {
-	head := req.Header.Get("Authorization")
 
-	if basicAuth(head) == false {
+	username, password, ok := req.BasicAuth()
+
+	if !ok {
+		log.Println(ok)
+		return
+	}
+
+	if username != "admin" || password != "admin" {
 		w.WriteHeader(http.StatusUnauthorized)
 		w.Write([]byte("Access Denied"))
 		return
 	}
+	//head := req.Header.Get("Authorization")
+	//
+	//if basicAuth(head) == false {
+	//	w.WriteHeader(http.StatusUnauthorized)
+	//	w.Write([]byte("Access Denied"))
+	//	return
+	//}
 
 	w.Header().Set("Content-Type", "application/json")
 	reqBody, err := ioutil.ReadAll(req.Body)
@@ -119,13 +130,26 @@ func addNewArticle(w http.ResponseWriter, req *http.Request) {
 }
 
 func getAllArticles(w http.ResponseWriter, req *http.Request) {
-	head := req.Header.Get("Authorization")
-	//fmt.Println(head)
-	if basicAuth(head) == false {
+	username, password, ok := req.BasicAuth()
+
+	if !ok {
+		log.Println(ok)
+		return
+	}
+
+	if username != "admin" || password != "admin" {
 		w.WriteHeader(http.StatusUnauthorized)
 		w.Write([]byte("Access Denied"))
 		return
 	}
+
+	//head := req.Header.Get("Authorization")
+	////fmt.Println(head)
+	//if basicAuth(head) == false {
+	//	w.WriteHeader(http.StatusUnauthorized)
+	//	w.Write([]byte("Access Denied"))
+	//	return
+	//}
 
 	w.Header().Set("Content-Type", "application/json")
 
@@ -136,13 +160,26 @@ func getAllArticles(w http.ResponseWriter, req *http.Request) {
 }
 
 func getSingleArticle(w http.ResponseWriter, req *http.Request) {
-	head := req.Header.Get("Authorization")
+	username, password, ok := req.BasicAuth()
 
-	if basicAuth(head) == false {
+	if !ok {
+		log.Println(ok)
+		return
+	}
+
+	if username != "admin" || password != "admin" {
 		w.WriteHeader(http.StatusUnauthorized)
 		w.Write([]byte("Access Denied"))
 		return
 	}
+
+	//head := req.Header.Get("Authorization")
+	//
+	//if basicAuth(head) == false {
+	//	w.WriteHeader(http.StatusUnauthorized)
+	//	w.Write([]byte("Access Denied"))
+	//	return
+	//}
 
 	w.Header().Set("Content-Type", "application/json")
 	fmt.Println(req.URL)
@@ -166,13 +203,26 @@ func getSingleArticle(w http.ResponseWriter, req *http.Request) {
 }
 
 func updateArticle(w http.ResponseWriter, req *http.Request) {
-	head := req.Header.Get("Authorization")
+	username, password, ok := req.BasicAuth()
 
-	if basicAuth(head) == false {
+	if !ok {
+		log.Println(ok)
+		return
+	}
+
+	if username != "admin" || password != "admin" {
 		w.WriteHeader(http.StatusUnauthorized)
 		w.Write([]byte("Access Denied"))
 		return
 	}
+
+	//head := req.Header.Get("Authorization")
+	//
+	//if basicAuth(head) == false {
+	//	w.WriteHeader(http.StatusUnauthorized)
+	//	w.Write([]byte("Access Denied"))
+	//	return
+	//}
 
 	w.Header().Set("Content-Type", "application/json")
 	vars := mux.Vars(req)
@@ -209,13 +259,26 @@ func updateArticle(w http.ResponseWriter, req *http.Request) {
 }
 
 func deleteArticle(w http.ResponseWriter, req *http.Request) {
-	head := req.Header.Get("Authorization")
+	username, password, ok := req.BasicAuth()
 
-	if basicAuth(head) == false {
+	if !ok {
+		log.Println(ok)
+		return
+	}
+
+	if username != "admin" || password != "admin" {
 		w.WriteHeader(http.StatusUnauthorized)
 		w.Write([]byte("Access Denied"))
 		return
 	}
+
+	//head := req.Header.Get("Authorization")
+	//
+	//if basicAuth(head) == false {
+	//	w.WriteHeader(http.StatusUnauthorized)
+	//	w.Write([]byte("Access Denied"))
+	//	return
+	//}
 
 	vars := mux.Vars(req)
 	key := vars["id"]
@@ -232,26 +295,26 @@ func deleteArticle(w http.ResponseWriter, req *http.Request) {
 }
 
 
-func basicAuth(req string) bool {
-	st := strings.Split(req, " ")
-
-	value, err := base64.StdEncoding.DecodeString(st[1])
-
-	if err != nil {
-		log.Println(err)
-		return false
-	}
-
-	st2 := string(value)
-
-	st3 := strings.Split(st2, ":")
-
-	if User[st3[0]] == st3[1] {
-		return true
-	}
-
-	return false
-}
+//func basicAuth(req string) bool {
+//	st := strings.Split(req, " ")
+//
+//	value, err := base64.StdEncoding.DecodeString(st[1])
+//
+//	if err != nil {
+//		log.Println(err)
+//		return false
+//	}
+//
+//	st2 := string(value)
+//
+//	st3 := strings.Split(st2, ":")
+//
+//	if User[st3[0]] == st3[1] {
+//		return true
+//	}
+//
+//	return false
+//}
 
 
 func StartAPI(Port string) {
