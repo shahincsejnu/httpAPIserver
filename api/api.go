@@ -4,10 +4,10 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
+	"github.com/gorilla/mux"
 	"io/ioutil"
 	"log"
 	"net/http"
-	"github.com/gorilla/mux"
 	"strings"
 )
 
@@ -115,7 +115,7 @@ func addNewArticle(w http.ResponseWriter, req *http.Request) {
 
 func getAllArticles(w http.ResponseWriter, req *http.Request) {
 	head := req.Header.Get("Authorization")
-	fmt.Println(head)
+	//fmt.Println(head)
 	if basicAuth(head) == false {
 		w.WriteHeader(http.StatusUnauthorized)
 		w.Write([]byte("Access Denied"))
@@ -140,8 +140,12 @@ func getSingleArticle(w http.ResponseWriter, req *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
+	fmt.Println(req.URL)
 	vars := mux.Vars(req)
+	//fmt.Println(vars)
 	key := vars["id"]
+
+	//fmt.Println("key : ", key)
 
 	for _, article := range Articles {
 		if article.ID == key {
@@ -168,6 +172,8 @@ func updateArticle(w http.ResponseWriter, req *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	vars := mux.Vars(req)
 	key := vars["id"]
+
+	//fmt.Println(key)
 
 	reqBody, _ := ioutil.ReadAll(req.Body)
 
@@ -245,7 +251,7 @@ func StartAPI(Port string) {
 	router.HandleFunc("/api/article/{id}", updateArticle).Methods("PUT")
 	router.HandleFunc("/api/article/{id}", getSingleArticle).Methods("GET")
 
-	fmt.Println("port : " , Port)
+	//fmt.Println("port : " , Port)
 	log.Fatal(http.ListenAndServe(Port, router))
 }
 
