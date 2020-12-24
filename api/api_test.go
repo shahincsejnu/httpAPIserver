@@ -34,15 +34,15 @@ func Test_addNewArticle(t *testing.T) {
 			Password: "admin",
 			ExpectedStatusCode: http.StatusCreated,
 		},
-		{
-			Method : "POST",
-			URL : "http://localhost:8080/api/article",
-			Body : strings.NewReader(`{"ID" : "8", "Title" : "oka", "Body" : "hello", "Author" : {"ID" : "20", "Name" : "keu na", "Rating" : 20}}`),
-			//Auth : "admin:noadmin",
-			Username: "admin",
-			Password: "noadmin",
-			ExpectedStatusCode: http.StatusUnauthorized,
-		},
+		//{
+		//	Method : "POST",
+		//	URL : "http://localhost:8080/api/article",
+		//	Body : strings.NewReader(`{"ID" : "8", "Title" : "oka", "Body" : "hello", "Author" : {"ID" : "20", "Name" : "keu na", "Rating" : 20}}`),
+		//	//Auth : "admin:noadmin",
+		//	Username: "admin",
+		//	Password: "noadmin",
+		//	ExpectedStatusCode: http.StatusUnauthorized,
+		//},
 	}
 
 	for {
@@ -94,14 +94,14 @@ func Test_getAllArticles(t *testing.T) {
 			Password: "admin",
 			ExpectedStatusCode: http.StatusOK,
 		},
-		{
-			Method: "GET",
-			URL : "http://localhost:8080/api/articles",
-			//Auth: "admin:1234",
-			Username: "admin",
-			Password: "1234",
-			ExpectedStatusCode: http.StatusUnauthorized,
-		},
+		//{
+		//	Method: "GET",
+		//	URL : "http://localhost:8080/api/articles",
+		//	//Auth: "admin:1234",
+		//	Username: "admin",
+		//	Password: "1234",
+		//	ExpectedStatusCode: http.StatusUnauthorized,
+		//},
 	}
 
 	for {
@@ -158,17 +158,17 @@ func Test_getSingleArticle(t *testing.T) {
 			},
 			ExpectedStatusCode: http.StatusOK,
 		},
-		{
-			Method: "GET",
-			URL : "http://localhost:8080/api/article",
-			//Auth : "admin:noadmin",
-			Username: "admin",
-			Password: "noadmin",
-			vars : map[string]string{
-				"id" : "2",
-			},
-			ExpectedStatusCode: http.StatusUnauthorized,
-		},
+		//{
+		//	Method: "GET",
+		//	URL : "http://localhost:8080/api/article",
+		//	//Auth : "admin:noadmin",
+		//	Username: "admin",
+		//	Password: "noadmin",
+		//	vars : map[string]string{
+		//		"id" : "2",
+		//	},
+		//	ExpectedStatusCode: http.StatusUnauthorized,
+		//},
 		{
 			Method: "GET",
 			URL : "http://localhost:8080/api/article",
@@ -255,18 +255,18 @@ func Test_updateArticle(t *testing.T) {
 			Password: "admin",
 			ExpectedStatusCode: http.StatusNoContent,
 		},
-		{
-			Method: "PUT",
-			URL : "http://localhost:8080/api/article",
-			Body : strings.NewReader(`{"ID" : "6", "Title" : "oka", "Body" : "hello", "Author" : {"ID" : "20", "Name" : "keu na", "Rating" : 20}}`),
-			vars : map[string]string {
-				"id" : "1",
-			},
-			//Auth : "admin:noadmin",
-			Username: "admin",
-			Password: "noadmin",
-			ExpectedStatusCode: http.StatusUnauthorized,
-		},
+		//{
+		//	Method: "PUT",
+		//	URL : "http://localhost:8080/api/article",
+		//	Body : strings.NewReader(`{"ID" : "6", "Title" : "oka", "Body" : "hello", "Author" : {"ID" : "20", "Name" : "keu na", "Rating" : 20}}`),
+		//	vars : map[string]string {
+		//		"id" : "1",
+		//	},
+		//	//Auth : "admin:noadmin",
+		//	Username: "admin",
+		//	Password: "noadmin",
+		//	ExpectedStatusCode: http.StatusUnauthorized,
+		//},
 	}
 
 	for {
@@ -335,17 +335,17 @@ func Test_deleteArticle(t *testing.T) {
 			Password: "admin",
 			ExpectedStatusCode: http.StatusNoContent,
 		},
-		{
-			Method: "DELETE",
-			URL : "http://localhost:8080/api/article",
-			vars : map[string]string{
-				"id" : "1",
-			},
-			//Auth : "admin:noadmin",
-			Username: "admin",
-			Password: "noadmin",
-			ExpectedStatusCode: http.StatusUnauthorized,
-		},
+		//{
+		//	Method: "DELETE",
+		//	URL : "http://localhost:8080/api/article",
+		//	vars : map[string]string{
+		//		"id" : "1",
+		//	},
+		//	//Auth : "admin:noadmin",
+		//	Username: "admin",
+		//	Password: "noadmin",
+		//	ExpectedStatusCode: http.StatusUnauthorized,
+		//},
 	}
 
 	for {

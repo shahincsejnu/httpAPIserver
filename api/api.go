@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/gorilla/mux"
+	"httpAPIserver/auth"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -86,18 +87,18 @@ func CreateInitialDB() {
 
 func addNewArticle(w http.ResponseWriter, req *http.Request) {
 
-	username, password, ok := req.BasicAuth()
-
-	if !ok {
-		log.Println(ok)
-		return
-	}
-
-	if username != "admin" || password != "admin" {
-		w.WriteHeader(http.StatusUnauthorized)
-		w.Write([]byte("Access Denied"))
-		return
-	}
+	//username, password, ok := req.BasicAuth()
+	//
+	//if !ok {
+	//	log.Println(ok)
+	//	return
+	//}
+	//
+	//if username != "admin" || password != "admin" {
+	//	w.WriteHeader(http.StatusUnauthorized)
+	//	w.Write([]byte("Access Denied"))
+	//	return
+	//}
 	//head := req.Header.Get("Authorization")
 	//
 	//if basicAuth(head) == false {
@@ -130,18 +131,18 @@ func addNewArticle(w http.ResponseWriter, req *http.Request) {
 }
 
 func getAllArticles(w http.ResponseWriter, req *http.Request) {
-	username, password, ok := req.BasicAuth()
-
-	if !ok {
-		log.Println(ok)
-		return
-	}
-
-	if username != "admin" || password != "admin" {
-		w.WriteHeader(http.StatusUnauthorized)
-		w.Write([]byte("Access Denied"))
-		return
-	}
+	//username, password, ok := req.BasicAuth()
+	//
+	//if !ok {
+	//	log.Println(ok)
+	//	return
+	//}
+	//
+	//if username != "admin" || password != "admin" {
+	//	w.WriteHeader(http.StatusUnauthorized)
+	//	w.Write([]byte("Access Denied"))
+	//	return
+	//}
 
 	//head := req.Header.Get("Authorization")
 	////fmt.Println(head)
@@ -160,18 +161,18 @@ func getAllArticles(w http.ResponseWriter, req *http.Request) {
 }
 
 func getSingleArticle(w http.ResponseWriter, req *http.Request) {
-	username, password, ok := req.BasicAuth()
-
-	if !ok {
-		log.Println(ok)
-		return
-	}
-
-	if username != "admin" || password != "admin" {
-		w.WriteHeader(http.StatusUnauthorized)
-		w.Write([]byte("Access Denied"))
-		return
-	}
+	//username, password, ok := req.BasicAuth()
+	//
+	//if !ok {
+	//	log.Println(ok)
+	//	return
+	//}
+	//
+	//if username != "admin" || password != "admin" {
+	//	w.WriteHeader(http.StatusUnauthorized)
+	//	w.Write([]byte("Access Denied"))
+	//	return
+	//}
 
 	//head := req.Header.Get("Authorization")
 	//
@@ -203,18 +204,18 @@ func getSingleArticle(w http.ResponseWriter, req *http.Request) {
 }
 
 func updateArticle(w http.ResponseWriter, req *http.Request) {
-	username, password, ok := req.BasicAuth()
-
-	if !ok {
-		log.Println(ok)
-		return
-	}
-
-	if username != "admin" || password != "admin" {
-		w.WriteHeader(http.StatusUnauthorized)
-		w.Write([]byte("Access Denied"))
-		return
-	}
+	//username, password, ok := req.BasicAuth()
+	//
+	//if !ok {
+	//	log.Println(ok)
+	//	return
+	//}
+	//
+	//if username != "admin" || password != "admin" {
+	//	w.WriteHeader(http.StatusUnauthorized)
+	//	w.Write([]byte("Access Denied"))
+	//	return
+	//}
 
 	//head := req.Header.Get("Authorization")
 	//
@@ -259,18 +260,18 @@ func updateArticle(w http.ResponseWriter, req *http.Request) {
 }
 
 func deleteArticle(w http.ResponseWriter, req *http.Request) {
-	username, password, ok := req.BasicAuth()
-
-	if !ok {
-		log.Println(ok)
-		return
-	}
-
-	if username != "admin" || password != "admin" {
-		w.WriteHeader(http.StatusUnauthorized)
-		w.Write([]byte("Access Denied"))
-		return
-	}
+	//username, password, ok := req.BasicAuth()
+	//
+	//if !ok {
+	//	log.Println(ok)
+	//	return
+	//}
+	//
+	//if username != "admin" || password != "admin" {
+	//	w.WriteHeader(http.StatusUnauthorized)
+	//	w.Write([]byte("Access Denied"))
+	//	return
+	//}
 
 	//head := req.Header.Get("Authorization")
 	//
@@ -323,11 +324,11 @@ func StartAPI(Port string) {
 
 	router := mux.NewRouter().StrictSlash(true)
 
-	router.HandleFunc("/api/articles", getAllArticles).Methods("GET")
-	router.HandleFunc("/api/article", addNewArticle).Methods("POST")
-	router.HandleFunc("/api/article/{id}", deleteArticle).Methods("DELETE")
-	router.HandleFunc("/api/article/{id}", updateArticle).Methods("PUT")
-	router.HandleFunc("/api/article/{id}", getSingleArticle).Methods("GET")
+	router.HandleFunc("/api/articles", auth.BasicAuthentication(getAllArticles)).Methods("GET")
+	router.HandleFunc("/api/article", auth.BasicAuthentication(addNewArticle)).Methods("POST")
+	router.HandleFunc("/api/article/{id}", auth.BasicAuthentication(deleteArticle)).Methods("DELETE")
+	router.HandleFunc("/api/article/{id}", auth.BasicAuthentication(updateArticle)).Methods("PUT")
+	router.HandleFunc("/api/article/{id}", auth.BasicAuthentication(getSingleArticle)).Methods("GET")
 
 	//fmt.Println("port : " , Port)
 	log.Fatal(http.ListenAndServe(Port, router))
