@@ -45,6 +45,20 @@ This is a basic RESTful API server, build with Golang. In this API server I have
 ---------------
 
 
+### curl Commands
+
+#### Read all articles
+
+`curl --user admin:admin -s -X GET http://localhost:8080/api/articles`
+
+#### Read an article
+
+`curl --user admin:admin -s -X GET http://localhost:8080/api/article/{id}`
+
+
+
+----------------
+
 ### API Endpoints Testing
 
 - Primarily tested the API endpoints by [Postman](https://github.com/postmanlabs)

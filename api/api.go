@@ -295,6 +295,26 @@ func deleteArticle(w http.ResponseWriter, req *http.Request) {
 	w.WriteHeader(http.StatusNoContent)
 }
 
+func logIn(w http.ResponseWriter, req *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
+	fmt.Println("Successfully logged in")
+
+	token, err := auth.GenerateJWT()
+	fmt.Println("token : ", token)
+
+	if err != nil {
+		log.Fatal(err)
+		return
+	}
+
+	w.WriteHeader(http.StatusCreated)
+	w.Write([]byte(token))
+	//w.Header().Add("Token",token)
+	//fmt.Println(w.Header().Get("Token"))
+	//w.Header().Set("Token", token)
+}
+
 
 //func basicAuth(req string) bool {
 //	st := strings.Split(req, " ")
@@ -324,11 +344,12 @@ func StartAPI(Port string) {
 
 	router := mux.NewRouter().StrictSlash(true)
 
-	router.HandleFunc("/api/articles", auth.BasicAuthentication(getAllArticles)).Methods("GET")
-	router.HandleFunc("/api/article", auth.BasicAuthentication(addNewArticle)).Methods("POST")
-	router.HandleFunc("/api/article/{id}", auth.BasicAuthentication(deleteArticle)).Methods("DELETE")
-	router.HandleFunc("/api/article/{id}", auth.BasicAuthentication(updateArticle)).Methods("PUT")
-	router.HandleFunc("/api/article/{id}", auth.BasicAuthentication(getSingleArticle)).Methods("GET")
+	router.HandleFunc("/api/login", auth.BasicAuthentication(logIn)).Methods("GET")
+	router.HandleFunc("/api/articles", auth.JwtAuthentication(getAllArticles)).Methods("GET")
+	router.HandleFunc("/api/article", auth.JwtAuthentication(addNewArticle)).Methods("POST")
+	router.HandleFunc("/api/article/{id}", auth.JwtAuthentication(deleteArticle)).Methods("DELETE")
+	router.HandleFunc("/api/article/{id}", auth.JwtAuthentication(updateArticle)).Methods("PUT")
+	router.HandleFunc("/api/article/{id}", auth.JwtAuthentication(getSingleArticle)).Methods("GET")
 
 	//fmt.Println("port : " , Port)
 	log.Fatal(http.ListenAndServe(Port, router))
