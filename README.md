@@ -6,18 +6,43 @@
 
 This is a basic RESTful API server, build with Golang. In this API server I have implemented Cobra CLI for running the API from the CLI and also used gorilla mux instead of Go net/http.
 
+------------ 
+
 ### Installation 
 
 `go install github.com/shahincsejnu/httpAPIserver`
 
+
+--------------
+
+### The Endpoints of this REST API
+
+|Endpoint | Function | Method | StatusCode | Authentication|
+|-----|-----|-----|-----|-----|
+|`/api/articles` | getAllArticles | GET | StatusOK, StatusUnauthorized | Basic|
+|`/api/article` | addNewArticle | POST | StatusCreated, StatusUnauthorized | Basic|
+|`/api/article/{id}` | deleteArticle | DELETE | StatusOK, StatusNoContent, StatusUnauthorized | Basic|
+|`/api/article/{id}` | updateArticle | PUT | StatusCreated, StatusNoContent, StatusUnauthorized | Basic|
+|`/api/article/{id}` | getSingleArticle | GET | StatusOK, StatusNoContent, StatusUnauthorized | Basic|
+
+
+----------------
+
 ### Basic Authentication
 
+- implemented basic authentication middleware
 - give username : `admin` and password : `admin` for each query to the api endpoint otherwise access will be denied
+
+
+----------------
+
 
 ### Run by CLI Commands
 
 - start the API in default port : 8080 by `httpAPIserver start`
 - start the API in your given port by `httpAPIserver start -p=8088`, give your port number in the place of 8088
+
+---------------
 
 
 ### API Endpoints Testing
@@ -26,5 +51,3 @@ This is a basic RESTful API server, build with Golang. In this API server I have
 - E2E Testing.
     - added unit testing for this API
     - Checked response status code with our expected status code
-
-
