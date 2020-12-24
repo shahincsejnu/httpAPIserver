@@ -33,7 +33,12 @@ This is a basic RESTful API server, build with Golang. In this API server I have
 - implemented basic authentication middleware
 - give username : `admin` and password : `admin` for each query to the api endpoint otherwise access will be denied
 
+----------------
 
+### JWT Authentication
+
+- implemented JWT authentication
+- first of all user need to hit `/api/login` endpoint with basic authentication then a token will be given and with that token for specific time user can do other request
 ----------------
 
 
