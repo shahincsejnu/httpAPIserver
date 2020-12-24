@@ -63,7 +63,10 @@ func Test_addNewArticle(t *testing.T) {
 
 		response := httptest.NewRecorder()
 
-		addNewArticle(response, request)
+		//addNewArticle(response, request)
+		router := mux.NewRouter()
+		router.HandleFunc("/api/article", addNewArticle)
+		router.ServeHTTP(response, request)
 
 		fmt.Println(response.Body)
 
@@ -123,7 +126,10 @@ func Test_getAllArticles(t *testing.T) {
 
 		response := httptest.NewRecorder()
 
-		getAllArticles(response, request)
+		//getAllArticles(response, request)
+		router := mux.NewRouter()
+		router.HandleFunc("/api/articles", getAllArticles)
+		router.ServeHTTP(response, request)
 
 		fmt.Println(response.Body)
 
@@ -206,7 +212,10 @@ func Test_getSingleArticle(t *testing.T) {
 
 		request = mux.SetURLVars(request, testCase.vars)
 
-		getSingleArticle(response, request)
+		//getSingleArticle(response, request)
+		router := mux.NewRouter()
+		router.HandleFunc("/api/article/%s", getSingleArticle)
+		router.ServeHTTP(response, request)
 
 		fmt.Println(response.Body)
 
@@ -289,7 +298,10 @@ func Test_updateArticle(t *testing.T) {
 
 		request = mux.SetURLVars(request, testCase.vars)
 
-		updateArticle(response, request)
+		//updateArticle(response, request)
+		router := mux.NewRouter()
+		router.HandleFunc("/api/article/%s", updateArticle)
+		router.ServeHTTP(response, request)
 
 		fmt.Println(response.Body)
 
@@ -368,7 +380,10 @@ func Test_deleteArticle(t *testing.T) {
 
 		request = mux.SetURLVars(request, testCase.vars)
 
-		deleteArticle(response, request)
+		//deleteArticle(response, request)
+		router := mux.NewRouter()
+		router.HandleFunc("/api/article/%s", deleteArticle)
+		router.ServeHTTP(response, request)
 
 		fmt.Println(response.Body)
 
