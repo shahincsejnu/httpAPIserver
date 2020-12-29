@@ -18,5 +18,5 @@ package main
 import "httpAPIserver/cmd"
 
 func main() {
-  cmd.Execute()
+	cmd.Execute()
 }

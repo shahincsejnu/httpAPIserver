@@ -49,7 +49,6 @@ func JwtAuthentication(hand http.HandlerFunc) http.HandlerFunc {
 
 		tkn := req.Header["Token"][0]
 
-
 		if len(tkn) == 0 {
 			response.WriteHeader(http.StatusUnauthorized)
 			response.Write([]byte("Access Denied"))

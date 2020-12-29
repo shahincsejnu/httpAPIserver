@@ -10,7 +10,9 @@ This is a basic RESTful API server, build with Golang. In this API server I have
 
 ### Installation 
 
-`go install github.com/shahincsejnu/httpAPIserver`
+- `git clone https://github.com/shahincsejnu/httpAPIserver.git`
+- `cd httpAPIserver`
+- `go install github.com/shahincsejnu/httpAPIserver`
 
 
 --------------

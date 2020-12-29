@@ -11,15 +11,13 @@ import (
 	"testing"
 )
 
-
-
 func Test_addNewArticle(t *testing.T) {
 	go StartAPI(":8080")
 
-	testCases := []struct{
-		Method string
-		URL string
-		Body io.Reader
+	testCases := []struct {
+		Method   string
+		URL      string
+		Body     io.Reader
 		Username string
 		Password string
 		//Auth string
@@ -27,11 +25,11 @@ func Test_addNewArticle(t *testing.T) {
 	}{
 		{
 			Method: "POST",
-			URL : "http://localhost:8080/api/article",
-			Body : strings.NewReader(`{"ID" : "6", "Title" : "oka", "Body" : "hello", "Author" : {"ID" : "20", "Name" : "keu na", "Rating" : 20}}`),
+			URL:    "http://localhost:8080/api/article",
+			Body:   strings.NewReader(`{"ID" : "6", "Title" : "oka", "Body" : "hello", "Author" : {"ID" : "20", "Name" : "keu na", "Rating" : 20}}`),
 			//Auth : "admin:admin",
-			Username: "admin",
-			Password: "admin",
+			Username:           "admin",
+			Password:           "admin",
 			ExpectedStatusCode: http.StatusCreated,
 		},
 		//{
@@ -81,20 +79,20 @@ func Test_addNewArticle(t *testing.T) {
 func Test_getAllArticles(t *testing.T) {
 	go StartAPI(":8080")
 
-	testCases := []struct{
+	testCases := []struct {
 		Method string
-		URL string
+		URL    string
 		//Auth string
-		Username string
-		Password string
+		Username           string
+		Password           string
 		ExpectedStatusCode int
 	}{
 		{
 			Method: "GET",
-			URL : "http://localhost:8080/api/articles",
+			URL:    "http://localhost:8080/api/articles",
 			//Auth : "admin:admin",
-			Username: "admin",
-			Password: "admin",
+			Username:           "admin",
+			Password:           "admin",
 			ExpectedStatusCode: http.StatusOK,
 		},
 		//{
@@ -144,9 +142,9 @@ func Test_getAllArticles(t *testing.T) {
 func Test_getSingleArticle(t *testing.T) {
 	go StartAPI(":8080")
 
-	testCases := []struct{
+	testCases := []struct {
 		Method string
-		URL string
+		URL    string
 		//Auth string
 		Username string
 		Password string
@@ -155,7 +153,7 @@ func Test_getSingleArticle(t *testing.T) {
 	}{
 		{
 			Method: "GET",
-			URL : "http://localhost:8080/api/article/1",
+			URL:    "http://localhost:8080/api/article/1",
 			//Auth : "admin:admin",
 			Username: "admin",
 			Password: "admin",
@@ -177,7 +175,7 @@ func Test_getSingleArticle(t *testing.T) {
 		//},
 		{
 			Method: "GET",
-			URL : "http://localhost:8080/api/article/200",
+			URL:    "http://localhost:8080/api/article/200",
 			//Auth : "admin:admin",
 			Username: "admin",
 			Password: "admin",
@@ -230,38 +228,38 @@ func Test_getSingleArticle(t *testing.T) {
 func Test_updateArticle(t *testing.T) {
 	go StartAPI(":8080")
 
-	testCases := []struct{
+	testCases := []struct {
 		Method string
-		URL string
-		Body io.Reader
-		vars map[string]string
+		URL    string
+		Body   io.Reader
+		vars   map[string]string
 		//Auth string
-		Username string
-		Password string
+		Username           string
+		Password           string
 		ExpectedStatusCode int
 	}{
 		{
 			Method: "PUT",
-			URL : "http://localhost:8080/api/article/1",
-			Body : strings.NewReader(`{"ID" : "6", "Title" : "oka", "Body" : "hello", "Author" : {"ID" : "20", "Name" : "keu na", "Rating" : 20}}`),
-			vars : map[string]string {
-				"id" : "1",
+			URL:    "http://localhost:8080/api/article/1",
+			Body:   strings.NewReader(`{"ID" : "6", "Title" : "oka", "Body" : "hello", "Author" : {"ID" : "20", "Name" : "keu na", "Rating" : 20}}`),
+			vars: map[string]string{
+				"id": "1",
 			},
 			//Auth : "admin:admin",
-			Username: "admin",
-			Password: "admin",
+			Username:           "admin",
+			Password:           "admin",
 			ExpectedStatusCode: http.StatusCreated,
 		},
 		{
 			Method: "PUT",
-			URL : "http://localhost:8080/api/article/200",
-			Body : strings.NewReader(`{"ID" : "6", "Title" : "oka", "Body" : "hello", "Author" : {"ID" : "20", "Name" : "keu na", "Rating" : 20}}`),
-			vars : map[string]string {
-				"id" : "202",
+			URL:    "http://localhost:8080/api/article/200",
+			Body:   strings.NewReader(`{"ID" : "6", "Title" : "oka", "Body" : "hello", "Author" : {"ID" : "20", "Name" : "keu na", "Rating" : 20}}`),
+			vars: map[string]string{
+				"id": "202",
 			},
 			//Auth : "admin:admin",
-			Username: "admin",
-			Password: "admin",
+			Username:           "admin",
+			Password:           "admin",
 			ExpectedStatusCode: http.StatusNoContent,
 		},
 		//{
@@ -316,35 +314,35 @@ func Test_updateArticle(t *testing.T) {
 func Test_deleteArticle(t *testing.T) {
 	go StartAPI(":8080")
 
-	testCases := []struct{
+	testCases := []struct {
 		Method string
-		URL string
-		vars map[string]string
+		URL    string
+		vars   map[string]string
 		//Auth string
-		Username string
-		Password string
+		Username           string
+		Password           string
 		ExpectedStatusCode int
 	}{
 		{
 			Method: "DELETE",
-			URL : "http://localhost:8080/api/article/1",
-			vars : map[string]string{
-				"id" : "1",
+			URL:    "http://localhost:8080/api/article/1",
+			vars: map[string]string{
+				"id": "1",
 			},
 			//Auth : "admin:admin",
-			Username: "admin",
-			Password: "admin",
+			Username:           "admin",
+			Password:           "admin",
 			ExpectedStatusCode: http.StatusOK,
 		},
 		{
 			Method: "DELETE",
-			URL : "http://localhost:8080/api/article/20",
-			vars : map[string]string{
-				"id" : "101",
+			URL:    "http://localhost:8080/api/article/20",
+			vars: map[string]string{
+				"id": "101",
 			},
 			//Auth : "admin:admin",
-			Username: "admin",
-			Password: "admin",
+			Username:           "admin",
+			Password:           "admin",
 			ExpectedStatusCode: http.StatusNoContent,
 		},
 		//{

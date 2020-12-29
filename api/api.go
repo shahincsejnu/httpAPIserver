@@ -1,4 +1,4 @@
-package  api
+package api
 
 import (
 	"encoding/json"
@@ -11,15 +11,15 @@ import (
 )
 
 type Article struct {
-	ID string `json:"id"`
-	Title string `json:"title"`
-	Body string `json:"body"`
+	ID     string `json:"id"`
+	Title  string `json:"title"`
+	Body   string `json:"body"`
 	Author Author `json:"author"`
 }
 
 type Author struct {
-	ID string `json:"id"`
-	Name string `json:"name"`
+	ID     string  `json:"id"`
+	Name   string  `json:"name"`
 	Rating float64 `json:"rating"`
 }
 
@@ -30,60 +30,59 @@ func CreateInitialDB() {
 	User = make(map[string]string)
 	User["admin"] = "admin"
 
-	Articles = []Article {
+	Articles = []Article{
 		{
-			ID : "1",
-			Title : "First Article",
-			Body : "This is our first article",
+			ID:    "1",
+			Title: "First Article",
+			Body:  "This is our first article",
 			Author: Author{
-				ID : "5",
-				Name : "Sahadat Hossain",
-				Rating : 6.5,
+				ID:     "5",
+				Name:   "Sahadat Hossain",
+				Rating: 6.5,
 			},
 		},
 		{
-			ID : "2",
-			Title : "Second Article",
-			Body : "This is our second article",
+			ID:    "2",
+			Title: "Second Article",
+			Body:  "This is our second article",
 			Author: Author{
-				ID : "4",
-				Name : "Prangon Majumdar",
-				Rating : 7.0,
+				ID:     "4",
+				Name:   "Prangon Majumdar",
+				Rating: 7.0,
 			},
 		},
 		{
-			ID : "3",
-			Title : "Third Article",
-			Body : "This is our third article",
+			ID:    "3",
+			Title: "Third Article",
+			Body:  "This is our third article",
 			Author: Author{
-				ID : "3",
-				Name : "Mehedi Islam",
-				Rating : 7.5,
+				ID:     "3",
+				Name:   "Mehedi Islam",
+				Rating: 7.5,
 			},
 		},
 		{
-			ID : "4",
-			Title : "Fourth Article",
-			Body : "This is our fourth article",
+			ID:    "4",
+			Title: "Fourth Article",
+			Body:  "This is our fourth article",
 			Author: Author{
-				ID : "2",
-				Name : "Pulak Kanti",
-				Rating : 8.5,
+				ID:     "2",
+				Name:   "Pulak Kanti",
+				Rating: 8.5,
 			},
 		},
 		{
-			ID : "5",
-			Title : "Fifth Article",
-			Body : "This is our fifth article",
+			ID:    "5",
+			Title: "Fifth Article",
+			Body:  "This is our fifth article",
 			Author: Author{
-				ID : "1",
-				Name : "Sakib Al Amin",
-				Rating : 9.5,
+				ID:     "1",
+				Name:   "Sakib Al Amin",
+				Rating: 9.5,
 			},
 		},
 	}
 }
-
 
 func addNewArticle(w http.ResponseWriter, req *http.Request) {
 
@@ -315,7 +314,6 @@ func logIn(w http.ResponseWriter, req *http.Request) {
 	//w.Header().Set("Token", token)
 }
 
-
 //func basicAuth(req string) bool {
 //	st := strings.Split(req, " ")
 //
@@ -337,7 +335,6 @@ func logIn(w http.ResponseWriter, req *http.Request) {
 //	return false
 //}
 
-
 func StartAPI(Port string) {
 	// at first we will create our initial database
 	CreateInitialDB()
@@ -354,4 +351,3 @@ func StartAPI(Port string) {
 	//fmt.Println("port : " , Port)
 	log.Fatal(http.ListenAndServe(Port, router))
 }
-
