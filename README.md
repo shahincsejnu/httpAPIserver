@@ -2,7 +2,7 @@
 
 ## RESTful HTTP API server using [Go](https://github.com/golang), [Cobra CLI](https://github.com/spf13/cobra), [gorilla mux](https://github.com/gorilla/mux)
 
-## Description
+### Description
 
 This is a basic RESTful API server, build with Golang. In this API server I have implemented Cobra CLI for running the API from the CLI and also used gorilla mux instead of Go net/http.
 
@@ -11,11 +11,18 @@ This is a basic RESTful API server, build with Golang. In this API server I have
 
 ------------ 
 
-### Installation 
+### Installation
 
 - `git clone https://github.com/shahincsejnu/httpAPIserver.git`
 - `cd httpAPIserver`
-- `go install github.com/shahincsejnu/httpAPIserver`
+- `go install httpAPIserver`
+
+---------------
+
+### Run by CLI Commands
+
+- start the API in default port : 8080 by `httpAPIserver start`
+- start the API in your given port by `httpAPIserver start -p=8088`, give your port number in the place of 8088
 
 
 --------------
@@ -33,6 +40,29 @@ This is a basic RESTful API server, build with Golang. In this API server I have
 
 ----------------
 
+### Data Model
+
+* Article Model
+```
+    type Article struct {
+    	ID       string    `json:"id"`
+    	Title    string    `json:"title"`
+    	Body     string    `json:"body"`
+    	Author   Author    `json:"author"`
+    }
+```
+
+* Author Model
+```
+    type Author struct {
+    	ID       string    `json:"id"`
+    	Name     string    `json:"name"`
+    	Rating   float64   `json:"rating"`
+    }
+```
+
+----------------
+
 ### Basic Authentication
 
 - implemented basic authentication middleware
@@ -47,12 +77,6 @@ This is a basic RESTful API server, build with Golang. In this API server I have
 ----------------
 
 
-### Run by CLI Commands
-
-- start the API in default port : 8080 by `httpAPIserver start`
-- start the API in your given port by `httpAPIserver start -p=8088`, give your port number in the place of 8088
-
----------------
 
 
 ### curl Commands
