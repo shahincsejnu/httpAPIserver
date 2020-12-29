@@ -79,17 +79,85 @@ This is a basic RESTful API server, build with Golang. In this API server I have
 
 
 
+### curl commands without authentication (it is valid for version : v1.0.0)
 
-### curl Commands
+#### Run the API server
 
-#### Read all articles
+- `httpAPIserver start --port=8080`
 
-`curl --user admin:admin -s -X GET http://localhost:8080/api/articles`
+#### Get all articles
 
-#### Read an article
+- `curl -X GET http://localhost:8080/api/articles`
 
-`curl --user admin:admin -s -X GET http://localhost:8080/api/article/{id}`
+#### Get single article
 
+- `curl -X GET http://localhost:8080/api/article/1`
+
+#### Create new article
+
+- `curl -X POST -H "Content-Type:application/json" -d '{"id":"10","title":"oka","body":"none","author":{"id":"11","name":"nobody","rating":10}}' http://localhost:8080/api/article`
+
+#### Update any article
+
+- `curl -X PUT -H "Content-Type:application/json" -d '{"id":"10","title":"update","body":"me","author":{"id":"11","name":"somebody","rating":9}}' http://localhost:8080/api/article/10`
+
+#### Delete an article
+
+- `curl -X DELETE -H http://localhost:8080/api/article/1`
+
+----------------
+
+
+### curl commands with Basic Authentication (it is valid for version : v1.0.1 and login function of version : v1.0.2)
+
+#### Get all articles
+
+- `curl -X GET --user admin:admin http://localhost:8080/api/articles`
+
+#### Get single article
+
+- `curl -X GET --user admin:admin http://localhost:8080/api/article/1`
+
+#### Create new article
+
+- `curl -X POST --user admin:admin -H "Conten-Type:application/json" -d '{{"id":"10","title":"update","body":"me","author":{"id":"11","name":"somebody","rating":9}}' http://localhost:8080/api/article`
+
+#### Update an article
+
+- `curl -X PUT --user admin:admin -H "Conten-Type:application/json" -d '{{"id":"10","title":"update","body":"me","author":{"id":"11","name":"somebody","rating":9}}' http://localhost:8080/api/article/1`
+
+#### Delete an article
+
+- `curl -X DELETE --user admin:admin http://localhost:8080/api/article/1`
+
+----------------
+
+
+### curl commands with JWT authentication
+
+#### Get jwt token via login with basic authentication
+
+- `curl -X GET --user admin:admin http://localhost:8080/api/login`
+
+#### Get all articles
+
+- `curl -X GET -H "Token: <jwt_token>" http://localhost:8080/api/articles`
+
+#### Get single article of id 1
+
+- `curl -X GET -H "Token: <jwt_token>" http://localhost:8080/api/article/1`
+
+#### Create new article
+
+- `curl -X POST -H "Token: <jwt_token>" -H "Content-Type:application/json" -d '{{"id":"10","title":"update","body":"me","author":{"id":"11","name":"somebody","rating":9}}' http://localhost:8080/api/article`
+
+#### Update an article
+
+- `curl -X POST -H "Token: <jwt_token>" -H "Content-Type:application/json" -d '{{"id":"10","title":"update","body":"me","author":{"id":"11","name":"somebody","rating":9}}' http://localhost:8080/api/article/1`
+
+#### Delete an article whose id is 1
+
+- `curl -X DELETE -H "Token: <jwt_token>" http://localhost:8080/api/article/1`
 
 
 ----------------
