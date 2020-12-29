@@ -6,6 +6,9 @@
 
 This is a basic RESTful API server, build with Golang. In this API server I have implemented Cobra CLI for running the API from the CLI and also used gorilla mux instead of Go net/http.
 
+
+[![Go Report Card](https://goreportcard.com/badge/github.com/shahincsejnu/httpAPIserver)](https://goreportcard.com/report/github.com/shahincsejnu/httpAPIserver)
+
 ------------ 
 
 ### Installation 
