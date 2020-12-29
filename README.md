@@ -31,11 +31,12 @@ This is a basic RESTful API server, build with Golang. In this API server I have
 
 |Endpoint | Function | Method | StatusCode | Authentication|
 |-----|-----|-----|-----|-----|
-|`/api/articles` | getAllArticles | GET | StatusOK, StatusUnauthorized | Basic|
-|`/api/article` | addNewArticle | POST | StatusCreated, StatusUnauthorized | Basic|
-|`/api/article/{id}` | deleteArticle | DELETE | StatusOK, StatusNoContent, StatusUnauthorized | Basic|
-|`/api/article/{id}` | updateArticle | PUT | StatusCreated, StatusNoContent, StatusUnauthorized | Basic|
-|`/api/article/{id}` | getSingleArticle | GET | StatusOK, StatusNoContent, StatusUnauthorized | Basic|
+|`/api/login`| logIn | GET | StatusOK, StatusUnauthorized | Basic
+|`/api/articles` | getAllArticles | GET | StatusOK, StatusUnauthorized | JWT|
+|`/api/article` | addNewArticle | POST | StatusCreated, StatusUnauthorized | JWT|
+|`/api/article/{id}` | deleteArticle | DELETE | StatusOK, StatusNoContent, StatusUnauthorized | JWT|
+|`/api/article/{id}` | updateArticle | PUT | StatusCreated, StatusNoContent, StatusUnauthorized | JWT|
+|`/api/article/{id}` | getSingleArticle | GET | StatusOK, StatusNoContent, StatusUnauthorized | JWT|
 
 
 ----------------
