@@ -125,13 +125,13 @@ curl -X PUT -H "Content-Type:application/json" -d '{"id":"10","title":"update","
 #### Create new article
 
 ```
-curl -X POST --user admin:admin -H "Conten-Type:application/json" -d '{{"id":"10","title":"update","body":"me","author":{"id":"11","name":"somebody","rating":9}}' http://localhost:8080/api/article
+curl -X POST --user admin:admin -H "Conten-Type:application/json" -d '{"id":"10","title":"update","body":"me","author":{"id":"11","name":"somebody","rating":9}}' http://localhost:8080/api/article
 ```
 
 #### Update an article
 
 ```
-curl -X PUT --user admin:admin -H "Conten-Type:application/json" -d '{{"id":"10","title":"update","body":"me","author":{"id":"11","name":"somebody","rating":9}}' http://localhost:8080/api/article/1
+curl -X PUT --user admin:admin -H "Conten-Type:application/json" -d '{"id":"10","title":"update","body":"me","author":{"id":"11","name":"somebody","rating":9}}' http://localhost:8080/api/article/1
 ```
 
 #### Delete an article
@@ -141,7 +141,7 @@ curl -X PUT --user admin:admin -H "Conten-Type:application/json" -d '{{"id":"10"
 ----------------
 
 
-### curl commands with JWT authentication
+### curl commands with JWT authentication (valid for version : v1.0.2)
 
 #### Get jwt token via login with basic authentication
 
@@ -158,13 +158,13 @@ curl -X PUT --user admin:admin -H "Conten-Type:application/json" -d '{{"id":"10"
 #### Create new article
 
 ```
-curl -X POST -H "Token: <jwt_token>" -H "Content-Type:application/json" -d '{{"id":"10","title":"update","body":"me","author":{"id":"11","name":"somebody","rating":9}}' http://localhost:8080/api/article
+curl -X POST -H "Token: <jwt_token>" -H "Content-Type:application/json" -d '{"id":"10","title":"update","body":"me","author":{"id":"11","name":"somebody","rating":9}}' http://localhost:8080/api/article
 ```
 
 #### Update an article
 
 ```
-curl -X POST -H "Token: <jwt_token>" -H "Content-Type:application/json" -d '{{"id":"10","title":"update","body":"me","author":{"id":"11","name":"somebody","rating":9}}' http://localhost:8080/api/article/1
+curl -X POST -H "Token: <jwt_token>" -H "Content-Type:application/json" -d '{"id":"10","title":"update","body":"me","author":{"id":"11","name":"somebody","rating":9}}' http://localhost:8080/api/article/1
 ```
 
 #### Delete an article whose id is 1
