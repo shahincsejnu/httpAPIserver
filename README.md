@@ -95,11 +95,15 @@ This is a basic RESTful API server, build with Golang. In this API server I have
 
 #### Create new article
 
-- `curl -X POST -H "Content-Type:application/json" -d '{"id":"10","title":"oka","body":"none","author":{"id":"11","name":"nobody","rating":10}}' http://localhost:8080/api/article`
+```
+curl -X POST -H "Content-Type:application/json" -d '{"id":"10","title":"oka","body":"none","author":{"id":"11","name":"nobody","rating":10}}' http://localhost:8080/api/article
+```
 
 #### Update any article
 
-- `curl -X PUT -H "Content-Type:application/json" -d '{"id":"10","title":"update","body":"me","author":{"id":"11","name":"somebody","rating":9}}' http://localhost:8080/api/article/10`
+```
+curl -X PUT -H "Content-Type:application/json" -d '{"id":"10","title":"update","body":"me","author":{"id":"11","name":"somebody","rating":9}}' http://localhost:8080/api/article/10
+```
 
 #### Delete an article
 
@@ -120,11 +124,15 @@ This is a basic RESTful API server, build with Golang. In this API server I have
 
 #### Create new article
 
-- `curl -X POST --user admin:admin -H "Conten-Type:application/json" -d '{{"id":"10","title":"update","body":"me","author":{"id":"11","name":"somebody","rating":9}}' http://localhost:8080/api/article`
+```
+curl -X POST --user admin:admin -H "Conten-Type:application/json" -d '{{"id":"10","title":"update","body":"me","author":{"id":"11","name":"somebody","rating":9}}' http://localhost:8080/api/article
+```
 
 #### Update an article
 
-- `curl -X PUT --user admin:admin -H "Conten-Type:application/json" -d '{{"id":"10","title":"update","body":"me","author":{"id":"11","name":"somebody","rating":9}}' http://localhost:8080/api/article/1`
+```
+curl -X PUT --user admin:admin -H "Conten-Type:application/json" -d '{{"id":"10","title":"update","body":"me","author":{"id":"11","name":"somebody","rating":9}}' http://localhost:8080/api/article/1
+```
 
 #### Delete an article
 
@@ -149,11 +157,15 @@ This is a basic RESTful API server, build with Golang. In this API server I have
 
 #### Create new article
 
-- `curl -X POST -H "Token: <jwt_token>" -H "Content-Type:application/json" -d '{{"id":"10","title":"update","body":"me","author":{"id":"11","name":"somebody","rating":9}}' http://localhost:8080/api/article`
+```
+curl -X POST -H "Token: <jwt_token>" -H "Content-Type:application/json" -d '{{"id":"10","title":"update","body":"me","author":{"id":"11","name":"somebody","rating":9}}' http://localhost:8080/api/article
+```
 
 #### Update an article
 
-- `curl -X POST -H "Token: <jwt_token>" -H "Content-Type:application/json" -d '{{"id":"10","title":"update","body":"me","author":{"id":"11","name":"somebody","rating":9}}' http://localhost:8080/api/article/1`
+```
+curl -X POST -H "Token: <jwt_token>" -H "Content-Type:application/json" -d '{{"id":"10","title":"update","body":"me","author":{"id":"11","name":"somebody","rating":9}}' http://localhost:8080/api/article/1
+```
 
 #### Delete an article whose id is 1
 
