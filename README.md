@@ -24,6 +24,17 @@ This is a basic RESTful API server, build with Golang. In this API server I have
 - start the API in default port : 8080 by `httpAPIserver start`
 - start the API in your given port by `httpAPIserver start -p=8088`, give your port number in the place of 8088
 
+--------------
+
+### Run the API server in docker container using dockerfile
+
+#### Create docker image from the dockerfile
+
+`docker build -t <image_name> .`
+
+#### Run the API server from the docker image in docker container
+
+`docker run -p 8080:8080 <image_name>`
 
 --------------
 
