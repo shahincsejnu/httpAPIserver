@@ -38,6 +38,14 @@ This is a basic RESTful API server, build with Golang. In this API server I have
 
 --------------
 
+#### upload the image to [Docker Hub](https://hub.docker.com/)
+
+- `docker login --username=<docker_hub_username>`
+- `docker tag <id_of_the_created_image> <docker_hub_username>/<name_of_the_image>:<tag>`
+- `docker push <docker_hub_username>/<name_of_the_image>:<tag>`
+
+--------------
+
 ### The Endpoints of this REST API
 
 |Endpoint | Function | Method | StatusCode | Authentication|
