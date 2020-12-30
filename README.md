@@ -34,7 +34,8 @@ This is a basic RESTful API server, build with Golang. In this API server I have
 
 #### Run the API server from the docker image in docker container
 
-`docker run -p 8080:8080 <image_name>`
+- `docker run -p 8088:8080 <image_name>` (valid when used `CMD ["start", "-p", "8080"]` in Dockerfile)
+- `docker run -p 8081:8088 <image_name> start -p "8088"` (valid for current version of Dockerfile, when did not used CMD in Dockerfile)
 
 --------------
 

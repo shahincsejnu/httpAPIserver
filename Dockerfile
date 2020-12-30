@@ -1,14 +1,16 @@
 #------------building an optimzed docker image for the api server using the binary of the api and busybox:glibc image"-----
 ## created the binary of the api server using normal go build -o server .
-FROM busybox:glibc
-
-WORKDIR /app
-
-COPY server .
-
-EXPOSE 8080
-
-CMD ["./server", "start"]
+#FROM busybox:glibc
+#
+#WORKDIR /app
+#
+#COPY server .
+#
+##EXPOSE 8080
+#
+#ENTRYPOINT ["./server"]
+#
+#CMD ["start", "-p", "9090"]
 
 
 #------------building an optimized docker image for the server using the binary of the API server and golang:alpine image---------
@@ -26,15 +28,16 @@ CMD ["./server", "start"]
 
 
 #------------building an optimized docker image for the server using the binary of the API server and ubuntu image-----
-#FROM ubuntu:latest
-#
-#WORKDIR /app
-#
-#COPY server .
-#
-#EXPOSE 8080
-#
-#CMD ["./server", "start"]
+FROM ubuntu:latest
+
+WORKDIR /app
+
+COPY server .
+
+ENTRYPOINT ["./server"]
+
+#CMD ["start"]
+#CMD ["start", "-p", "9090"]
 
 
 #-------------- building an optimized docker image for the server using multi-stage builds -----------

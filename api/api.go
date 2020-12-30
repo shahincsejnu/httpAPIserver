@@ -349,5 +349,9 @@ func StartAPI(Port string) {
 	router.HandleFunc("/api/article/{id}", auth.JwtAuthentication(getSingleArticle)).Methods("GET")
 
 	//fmt.Println("port : " , Port)
-	log.Fatal(http.ListenAndServe(Port, router))
+
+	//addr := "http://localhost:" + Port
+	//fmt.Println(addr)
+	port := ":" + Port
+	log.Fatal(http.ListenAndServe(port, router))
 }

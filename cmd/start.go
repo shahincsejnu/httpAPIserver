@@ -36,6 +36,7 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("start called")
+		fmt.Println("port : ", Port)
 		api.StartAPI(Port)
 	},
 }
@@ -43,8 +44,8 @@ to quickly create a Cobra application.`,
 func init() {
 	rootCmd.AddCommand(startCmd)
 
-	startCmd.Flags().StringVarP(&Port, "port", "p", ":8080", "This flag is used to set the port, default 8080")
-	fmt.Println("int port : ", Port)
+	startCmd.PersistentFlags().StringVarP(&Port, "port", "p", "8080", "This flag is used to set the port, default 8080")
+	//fmt.Println("in port : ", Port)
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
