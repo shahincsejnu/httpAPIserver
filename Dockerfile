@@ -1,7 +1,6 @@
-#------------building an optimized docker image for the server using the binary of the API server and golang:alpine image---------
-#FROM golang:1.15-alpine3.7
-## created the binary of the API server in my local machine with CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o server .
-FROM alpine:latest
+#------------building an optimzed docker image for the api server using the binary of the api and busybox:glibc image"-----
+## created the binary of the api server using normal go build -o server .
+FROM busybox:glibc
 
 WORKDIR /app
 
@@ -10,6 +9,20 @@ COPY server .
 EXPOSE 8080
 
 CMD ["./server", "start"]
+
+
+#------------building an optimized docker image for the server using the binary of the API server and golang:alpine image---------
+#FROM golang:1.15-alpine3.7
+## created the binary of the API server in my local machine with CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o server .
+#FROM alpine:latest
+#
+#WORKDIR /app
+#
+#COPY server .
+#
+#EXPOSE 8080
+#
+#CMD ["./server", "start"]
 
 
 #------------building an optimized docker image for the server using the binary of the API server and ubuntu image-----
