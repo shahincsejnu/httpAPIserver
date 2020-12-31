@@ -5,7 +5,9 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	"log"
 	"net/http"
+	"os"
 	"time"
+	"github.com/joho/godotenv"
 )
 
 func BasicAuthentication(hand http.HandlerFunc) http.HandlerFunc {
@@ -13,7 +15,7 @@ func BasicAuthentication(hand http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		username, password, ok := req.BasicAuth()
 
-		if !ok || username != "admin" || password != "admin" {
+		if !ok || username != Username || password != Pass {
 			http.Error(w, "Access Denied", http.StatusUnauthorized)
 			return
 		}
@@ -22,7 +24,8 @@ func BasicAuthentication(hand http.HandlerFunc) http.HandlerFunc {
 	}
 }
 
-var secretKey = []byte("peranaichill")
+var secretKey = []byte(os.Getenv("SecretKey"))
+var Username, Pass string
 
 func GenerateJWT() (string, error) {
 	token := jwt.New(jwt.SigningMethodHS256)
@@ -34,7 +37,7 @@ func GenerateJWT() (string, error) {
 	claims["exp"] = time.Now().Add(300 * time.Second).Unix()
 
 	tokenString, err := token.SignedString(secretKey)
-	fmt.Println("tokenstring: ", tokenString)
+	//fmt.Println("tokenstring: ", tokenString)
 
 	if err != nil {
 		fmt.Println(err)
@@ -71,4 +74,15 @@ func JwtAuthentication(hand http.HandlerFunc) http.HandlerFunc {
 			hand.ServeHTTP(response, req)
 		}
 	}
+}
+
+func init() {
+	err := godotenv.Load(".env")
+	// err := godotenv.Load()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	Username = os.Getenv("UserName")
+	Pass = os.Getenv("Password")
 }
