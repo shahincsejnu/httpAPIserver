@@ -32,7 +32,6 @@ FROM ubuntu:latest
 
 WORKDIR /app
 
-COPY .env .
 COPY server .
 
 ENTRYPOINT ["./server"]

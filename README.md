@@ -47,6 +47,14 @@ This is a basic RESTful API server, build with Golang. In this API server I have
 
 --------------
 
+#### run using volume (valid for current version where did not gave .env file in docker image)
+
+
+- `docker run -v <absolute_host_path/.env>:<container_path/.env> -p 8088:8089 <image_name> start -p 8089`
+
+
+--------------
+
 ### The Endpoints of this REST API
 
 |Endpoint | Function | Method | StatusCode | Authentication|
