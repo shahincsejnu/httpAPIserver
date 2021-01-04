@@ -12,7 +12,7 @@ import (
 )
 
 func Test_addNewArticle(t *testing.T) {
-	go StartAPI(":8080")
+	go StartAPI("8080")
 
 	testCases := []struct {
 		Method   string
@@ -77,7 +77,7 @@ func Test_addNewArticle(t *testing.T) {
 }
 
 func Test_getAllArticles(t *testing.T) {
-	go StartAPI(":8080")
+	go StartAPI("8080")
 
 	testCases := []struct {
 		Method string
@@ -140,7 +140,7 @@ func Test_getAllArticles(t *testing.T) {
 }
 
 func Test_getSingleArticle(t *testing.T) {
-	go StartAPI(":8080")
+	go StartAPI("8080")
 
 	testCases := []struct {
 		Method string
@@ -226,7 +226,7 @@ func Test_getSingleArticle(t *testing.T) {
 }
 
 func Test_updateArticle(t *testing.T) {
-	go StartAPI(":8080")
+	go StartAPI("8080")
 
 	testCases := []struct {
 		Method string
@@ -312,7 +312,7 @@ func Test_updateArticle(t *testing.T) {
 }
 
 func Test_deleteArticle(t *testing.T) {
-	go StartAPI(":8080")
+	go StartAPI("8080")
 
 	testCases := []struct {
 		Method string

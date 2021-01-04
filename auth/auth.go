@@ -77,7 +77,7 @@ func JwtAuthentication(hand http.HandlerFunc) http.HandlerFunc {
 }
 
 func init() {
-	err := godotenv.Load(".env")
+	err := godotenv.Load("/home/sahadat/go/src/github.com/shahincsejnu/httpAPIserver/.env")
 	// err := godotenv.Load()
 	if err != nil {
 		log.Fatal(err)
