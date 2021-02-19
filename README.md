@@ -30,7 +30,8 @@ This is a basic RESTful API server, build with Golang. In this API server I have
 
 #### Create docker image from the dockerfile
 
-`docker build -t <image_name> .`
+- `docker build -t <image_name> .`
+- or `docker build -t <docker_hub_username>/<image_name>:<tag> .` (if your do this then don't need to give tag before dockerhub push)
 
 #### Run the API server from the docker image in docker container
 
