@@ -157,6 +157,8 @@ func getAllArticles(w http.ResponseWriter, req *http.Request) {
 	if err := json.NewEncoder(w).Encode(Articles); err != nil {
 		log.Println(err)
 	}
+
+	fmt.Println("disi")
 }
 
 func getSingleArticle(w http.ResponseWriter, req *http.Request) {
@@ -308,6 +310,7 @@ func logIn(w http.ResponseWriter, req *http.Request) {
 	}
 
 	w.WriteHeader(http.StatusCreated)
+	w.Header().Set("Token", token)
 	w.Write([]byte(token))
 	//w.Header().Add("Token",token)
 	//fmt.Println(w.Header().Get("Token"))

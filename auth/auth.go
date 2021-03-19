@@ -34,7 +34,7 @@ func GenerateJWT() (string, error) {
 	claims := token.Claims.(jwt.MapClaims)
 	//claims["authorized"] = true
 	//claims["user"] = "admin"
-	claims["exp"] = time.Now().Add(300 * time.Second).Unix()
+	claims["exp"] = time.Now().Add(300 * time.Minute).Unix()
 
 	tokenString, err := token.SignedString(secretKey)
 	//fmt.Println("tokenstring: ", tokenString)
@@ -50,7 +50,9 @@ func GenerateJWT() (string, error) {
 func JwtAuthentication(hand http.HandlerFunc) http.HandlerFunc {
 	return func(response http.ResponseWriter, req *http.Request) {
 
-		tkn := req.Header["Token"][0]
+		// tkn := req.Header["Token"][0]
+		tkn := req.Header.Get("Token")
+		fmt.Println("paisi")
 
 		if len(tkn) == 0 {
 			response.WriteHeader(http.StatusUnauthorized)
