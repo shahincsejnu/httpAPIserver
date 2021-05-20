@@ -3,11 +3,11 @@ package auth
 import (
 	"fmt"
 	"github.com/dgrijalva/jwt-go"
+	"github.com/joho/godotenv"
 	"log"
 	"net/http"
 	"os"
 	"time"
-	"github.com/joho/godotenv"
 )
 
 func BasicAuthentication(hand http.HandlerFunc) http.HandlerFunc {
@@ -79,7 +79,7 @@ func JwtAuthentication(hand http.HandlerFunc) http.HandlerFunc {
 }
 
 func init() {
-	err := godotenv.Load("/home/sahadat/go/src/github.com/shahincsejnu/httpAPIserver/.env")
+	err := godotenv.Load(".env")
 	// err := godotenv.Load()
 	if err != nil {
 		log.Fatal(err)
