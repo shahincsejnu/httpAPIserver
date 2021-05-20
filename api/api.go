@@ -353,7 +353,7 @@ func StartAPI(Port string) {
 	//router.HandleFunc("/api/article/{id}", auth.JwtAuthentication(updateArticle)).Methods("PUT")
 	//router.HandleFunc("/api/article/{id}", auth.JwtAuthentication(getSingleArticle)).Methods("GET")
 
-	authorRepo := in_memory.NewInMemoryArticleRepository()
+	authorRepo := in_memory.NewInMemoryArticleRepository(nil)
 	article_handler.NewArticleHandler(router, authorRepo)
 
 	//fmt.Println("port : " , Port)

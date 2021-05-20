@@ -60,7 +60,7 @@ func (i *inMemoryArticleRepository) Delete(id string) error {
 }
 
 // NewInMemoryArticleRepository returns an in memory implementation of ArticleRepository
-func NewInMemoryArticleRepository() repository.ArticleRepository {
+func NewInMemoryArticleRepository(initialData map[string]*entity.Article) repository.ArticleRepository {
 	data := make(map[string]*entity.Article)
 	return &inMemoryArticleRepository{data: data}
 }
