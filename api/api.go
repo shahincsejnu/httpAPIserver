@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/gorilla/mux"
+	article_handler "httpAPIserver/architecture/article/delivery/http"
+	"httpAPIserver/architecture/article/repository/in_memory"
 	"httpAPIserver/auth"
 	"io/ioutil"
 	"log"
@@ -345,11 +347,14 @@ func StartAPI(Port string) {
 	router := mux.NewRouter().StrictSlash(true)
 
 	router.HandleFunc("/api/login", auth.BasicAuthentication(logIn)).Methods("GET")
-	router.HandleFunc("/api/articles", auth.JwtAuthentication(getAllArticles)).Methods("GET")
-	router.HandleFunc("/api/article", auth.JwtAuthentication(addNewArticle)).Methods("POST")
-	router.HandleFunc("/api/article/{id}", auth.JwtAuthentication(deleteArticle)).Methods("DELETE")
-	router.HandleFunc("/api/article/{id}", auth.JwtAuthentication(updateArticle)).Methods("PUT")
-	router.HandleFunc("/api/article/{id}", auth.JwtAuthentication(getSingleArticle)).Methods("GET")
+	//router.HandleFunc("/api/articles", auth.JwtAuthentication(getAllArticles)).Methods("GET")
+	//router.HandleFunc("/api/article", auth.JwtAuthentication(addNewArticle)).Methods("POST")
+	//router.HandleFunc("/api/article/{id}", auth.JwtAuthentication(deleteArticle)).Methods("DELETE")
+	//router.HandleFunc("/api/article/{id}", auth.JwtAuthentication(updateArticle)).Methods("PUT")
+	//router.HandleFunc("/api/article/{id}", auth.JwtAuthentication(getSingleArticle)).Methods("GET")
+
+	articleRepo := in_memory.NewInMemoryArticleRepository(nil)
+	article_handler.NewArticleHandler(router, articleRepo)
 
 	//fmt.Println("port : " , Port)
 
